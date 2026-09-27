@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI-Powered WHO Life Expectancy Predictor and Public Health Analytics. Trained on 193 nations with 96.6% accuracy.">
+  <title>VitaPulse • WHO Life Expectancy AI Predictor</title>
+  
+  <!-- Modern Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <!-- Header Navigation -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+          </svg>
+        </div>
+        <div class="brand-text">
+          <h1>VitaPulse <span>AI</span></h1>
+          <p>WHO Global Longevity Intelligence</p>
+        </div>
+      </div>
+
+      <nav class="nav-links">
+        <a href="#predictor-section" class="nav-item active" id="nav-predictor">
+          <span class="nav-icon">⚡</span> Predictor
+        </a>
+        <a href="#feature-drivers-section" class="nav-item" id="nav-drivers">
+          <span class="nav-icon">📊</span> Longevity Drivers
+        </a>
+        <a href="#benchmarks-section" class="nav-item" id="nav-benchmarks">
+          <span class="nav-icon">🏆</span> Model Metrics
+        </a>
+        <a href="#explorer-section" class="nav-item" id="nav-explorer">
+          <span class="nav-icon">🌐</span> WHO Data Explorer
+        </a>
+      </nav>
+
+      <div class="header-badge">
+        <span class="pulse-dot"></span>
+        <span class="badge-text" id="header-accuracy-badge">Model R²: 96.6%</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    
+    <!-- Hero / KPI Overview -->
+    <section class="hero-section">
+      <div class="hero-header">
+        <span class="sub-pill">Machine Learning On World Health Organization Data (2000–2015)</span>
+        <h2 class="hero-title">Predict National & Individual Longevity with Clinical AI</h2>
+        <p class="hero-desc">
+          Explore how immunization, socioeconomic development, healthcare spending, and disease mortality interplay to shape life expectancy across 193 nations.
+        </p>
+      </div>
+
+      <!-- KPI Stat Cards -->
+      <div class="kpi-grid">
+        <div class="kpi-card" id="kpi-r2">
+          <div class="kpi-icon-wrap icon-cyan">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20v-6M6 20V10M18 20V4"/></svg>
+          </div>
+          <div class="kpi-data">
+            <span class="kpi-value" id="stat-r2">96.64%</span>
+            <span class="kpi-label">Random Forest R² Accuracy</span>
+          </div>
+          <div class="kpi-footer text-cyan">5-Fold CV: 95.70%</div>
+        </div>
+
+        <div class="kpi-card" id="kpi-mae">
+          <div class="kpi-icon-wrap icon-emerald">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <div class="kpi-data">
+            <span class="kpi-value" id="stat-mae">±1.07 yrs</span>
+            <span class="kpi-label">Mean Absolute Error</span>
+          </div>
+          <div class="kpi-footer text-emerald">Ultra-Low Deviation</div>
+        </div>
+
+        <div class="kpi-card" id="kpi-countries">
+          <div class="kpi-icon-wrap icon-indigo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          </div>
+          <div class="kpi-data">
+            <span class="kpi-value" id="stat-countries">183</span>
+            <span class="kpi-label">Nations & Territories</span>
+          </div>
+          <div class="kpi-footer text-indigo">2,928 Historical Records</div>
+        </div>
+
+        <div class="kpi-card" id="kpi-baseline">
+          <div class="kpi-icon-wrap icon-amber">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
+          <div class="kpi-data">
+            <span class="kpi-value" id="stat-baseline">69.2 yrs</span>
+            <span class="kpi-label">Global Baseline Average</span>
+          </div>
+          <div class="kpi-footer text-amber">WHO Historical Mean</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Interactive Predictor Workspace -->
+    <section class="predictor-section" id="predictor-section">
+      
+      <!-- Preset and Toolbar Bar -->
+      <div class="toolbar-card">
+        <div class="toolbar-group">
+          <label for="country-preset-select" class="toolbar-label">
+            <span>🌍</span> Quick Load Country Profile:
+          </label>
+          <div class="select-wrapper">
+            <select id="country-preset-select" class="custom-select">
+              <option value="" disabled selected>Choose a country preset...</option>
+              <optgroup label="High Longevity Examples">
+                <option value="Japan">Japan (WHO actual: 83.7 yrs)</option>
+                <option value="Switzerland">Switzerland (WHO actual: 83.4 yrs)</option>
+                <option value="Germany">Germany (WHO actual: 81.0 yrs)</option>
+                <option value="Australia">Australia (WHO actual: 82.8 yrs)</option>
+                <option value="United States of America">United States (WHO actual: 79.3 yrs)</option>
+              </optgroup>
+              <optgroup label="Emerging & Mid-Range">
+                <option value="Brazil">Brazil (WHO actual: 75.0 yrs)</option>
+                <option value="China">China (WHO actual: 76.1 yrs)</option>
+                <option value="India">India (WHO actual: 68.3 yrs)</option>
+                <option value="Indonesia">Indonesia (WHO actual: 69.1 yrs)</option>
+                <option value="South Africa">South Africa (WHO actual: 62.9 yrs)</option>
+              </optgroup>
+              <optgroup label="Challenged Healthcare Contexts">
+                <option value="Kenya">Kenya (WHO actual: 63.4 yrs)</option>
+                <option value="Nigeria">Nigeria (WHO actual: 54.5 yrs)</option>
+                <option value="Central African Republic">Central African Republic (WHO actual: 52.5 yrs)</option>
+                <option value="Afghanistan">Afghanistan (WHO actual: 65.0 yrs)</option>
+              </optgroup>
+              <optgroup label="All 183 Countries" id="all-countries-optgroup"></optgroup>
+            </select>
+          </div>
+          <button id="btn-load-country" class="btn-ghost" title="Load selected country indicators">
+            Load Profile
+          </button>
+        </div>
+
+        <div class="toolbar-actions">
+          <button id="btn-reset-median" class="btn-ghost" title="Reset all fields to global median values">
+            ↺ Reset to Global Median
+          </button>
+          
+          <div class="model-select-wrap">
+            <span class="model-select-label">Model:</span>
+            <select id="model-algorithm-select" class="custom-select-small">
+              <option value="Random Forest" selected>Random Forest (R² 96.6%)</option>
+              <option value="Gradient Boosting">Gradient Boosting (R² 96.4%)</option>
+              <option value="Ridge">Ridge Regression (R² 81.9%)</option>
+            </select>
+          </div>
+
+          <label class="toggle-control" title="Automatically calculate prediction when sliding controls">
+            <input type="checkbox" id="toggle-realtime" checked>
+            <span class="toggle-slider"></span>
+            <span class="toggle-text">Live Predict</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Main Prediction Grid (Left: Controls, Right: Result Output) -->
+      <div class="workspace-grid">
+        
+        <!-- Indicator Controls Form (Left Column) -->
+        <div class="indicators-container">
+          
+          <!-- Category Tabs -->
+          <div class="category-tabs" role="tablist">
+            <button class="cat-tab active" data-category="socioeconomic" id="tab-socio">
+              🏛️ Socioeconomic (6)
+            </button>
+            <button class="cat-tab" data-category="mortality" id="tab-mortality">
+              🧬 Mortality & Diseases (5)
+            </button>
+            <button class="cat-tab" data-category="immunization" id="tab-immunization">
+              💉 Immunization (3)
+            </button>
+            <button class="cat-tab" data-category="lifestyle" id="tab-lifestyle">
+              🥗 Lifestyle & Nutrition (4)
+            </button>
+          </div>
+
+          <!-- Tab 1: Socioeconomic & Development -->
+          <div class="tab-panel active" id="panel-socioeconomic">
+            <div class="form-grid">
+              
+              <!-- Country Status Toggle -->
+              <div class="input-card full-width">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-status_developed">Country Development Status</label>
+                    <span class="field-hint">Classification according to UN/WHO criteria</span>
+                  </div>
+                  <span class="field-unit-pill" id="badge-status-val">Developing</span>
+                </div>
+                <div class="status-toggle-group">
+                  <button type="button" class="status-btn active" id="btn-status-developing" data-val="0">Developing Nation</button>
+                  <button type="button" class="status-btn" id="btn-status-developed" data-val="1">Developed Nation</button>
+                  <input type="hidden" id="input-status_developed" value="0">
+                </div>
+              </div>
+
+              <!-- Income Composition (HDI) -->
+              <div class="input-card featured-input">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-income_composition_of_resources">
+                      Income Composition / HDI <span class="badge-priority">⭐ 17.1% Weight</span>
+                    </label>
+                    <span class="field-hint">Human Development Index (0 = Lowest, 1 = Highest)</span>
+                  </div>
+                  <span class="field-value-display" id="val-income_composition_of_resources">0.68</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-income_composition_of_resources" min="0" max="1" step="0.01" value="0.68" class="range-slider">
+                  <input type="number" id="num-income_composition_of_resources" min="0" max="1" step="0.01" value="0.68" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0.00 (Least developed)</span>
+                  <span>1.00 (Max development)</span>
+                </div>
+              </div>
+
+              <!-- Average Schooling -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-schooling">Average Schooling</label>
+                    <span class="field-hint">Average duration of formal education</span>
+                  </div>
+                  <span class="field-value-display" id="val-schooling">12.3 yrs</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-schooling" min="0" max="21" step="0.1" value="12.3" class="range-slider">
+                  <input type="number" id="num-schooling" min="0" max="21" step="0.1" value="12.3" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0 years</span>
+                  <span>21 years</span>
+                </div>
+              </div>
+
+              <!-- GDP per Capita -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-gdp">GDP per Capita</label>
+                    <span class="field-hint">Gross domestic product per capita (USD)</span>
+                  </div>
+                  <span class="field-value-display" id="val-gdp">$3,120</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-gdp" min="0" max="120000" step="100" value="3120" class="range-slider">
+                  <input type="number" id="num-gdp" min="0" max="120000" step="50" value="3120" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>$0</span>
+                  <span>$120,000</span>
+                </div>
+              </div>
+
+              <!-- Health Expenditure % of GDP -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-percentage_expenditure">Health Spending (% of GDP)</label>
+                    <span class="field-hint">National expenditure on health as % of GDP</span>
+                  </div>
+                  <span class="field-value-display" id="val-percentage_expenditure">65.0%</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-percentage_expenditure" min="0" max="2000" step="1" value="65.0" class="range-slider">
+                  <input type="number" id="num-percentage_expenditure" min="0" max="2000" step="1" value="65.0" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0%</span>
+                  <span>2,000%</span>
+                </div>
+              </div>
+
+              <!-- Govt Health Budget Ratio -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-total_expenditure">Govt Health Budget Share</label>
+                    <span class="field-hint">% of total government spending allocated to health</span>
+                  </div>
+                  <span class="field-value-display" id="val-total_expenditure">5.75%</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-total_expenditure" min="0.5" max="18" step="0.1" value="5.75" class="range-slider">
+                  <input type="number" id="num-total_expenditure" min="0.5" max="18" step="0.1" value="5.75" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0.5%</span>
+                  <span>18.0%</span>
+                </div>
+              </div>
+
+              <!-- Total Population -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-population">Total Population</label>
+                    <span class="field-hint">Estimated national population size</span>
+                  </div>
+                  <span class="field-value-display" id="val-population">3.6M</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-population" min="10000" max="150000000" step="100000" value="3600000" class="range-slider">
+                  <input type="number" id="num-population" min="1000" max="1500000000" step="10000" value="3600000" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>10k</span>
+                  <span>150M+</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Tab 2: Mortality & Disease Burden -->
+          <div class="tab-panel" id="panel-mortality">
+            <div class="form-grid">
+              
+              <!-- HIV/AIDS Mortality -->
+              <div class="input-card featured-input full-width">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-hiv_aids">
+                      HIV/AIDS Mortality (Ages 0-4) <span class="badge-priority badge-danger">⚡ #1 Predictor: 59.7% Weight</span>
+                    </label>
+                    <span class="field-hint">Deaths per 1,000 live births. Crucial indicator of healthcare infrastructure & pediatric protection.</span>
+                  </div>
+                  <span class="field-value-display text-danger" id="val-hiv_aids">0.1 deaths/1k</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-hiv_aids" min="0.1" max="50.6" step="0.1" value="0.1" class="range-slider slider-danger">
+                  <input type="number" id="num-hiv_aids" min="0.1" max="50.6" step="0.1" value="0.1" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0.1 (Minimal / Controlled)</span>
+                  <span>50.6 (Critical outbreak)</span>
+                </div>
+              </div>
+
+              <!-- Adult Mortality -->
+              <div class="input-card featured-input full-width">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-adult_mortality">
+                      Adult Mortality Rate <span class="badge-priority">⭐ 12.7% Weight</span>
+                    </label>
+                    <span class="field-hint">Probability of dying between ages 15 and 60 per 1,000 population</span>
+                  </div>
+                  <span class="field-value-display" id="val-adult_mortality">144 deaths/1k</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-adult_mortality" min="1" max="720" step="1" value="144" class="range-slider">
+                  <input type="number" id="num-adult_mortality" min="1" max="720" step="1" value="144" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>1 / 1,000 (Low mortality)</span>
+                  <span>720 / 1,000 (Severe mortality)</span>
+                </div>
+              </div>
+
+              <!-- Infant Deaths -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-infant_deaths">Infant Deaths</label>
+                    <span class="field-hint">Infant deaths per 1,000 population</span>
+                  </div>
+                  <span class="field-value-display" id="val-infant_deaths">3 / 1k</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-infant_deaths" min="0" max="250" step="1" value="3" class="range-slider">
+                  <input type="number" id="num-infant_deaths" min="0" max="250" step="1" value="3" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0 / 1k</span>
+                  <span>250 / 1k</span>
+                </div>
+              </div>
+
+              <!-- Under-Five Mortality -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-under_five_deaths">Under-Five Deaths</label>
+                    <span class="field-hint">Deaths under age 5 per 1,000 population</span>
+                  </div>
+                  <span class="field-value-display" id="val-under_five_deaths">4 / 1k</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-under_five_deaths" min="0" max="300" step="1" value="4" class="range-slider">
+                  <input type="number" id="num-under_five_deaths" min="0" max="300" step="1" value="4" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0 / 1k</span>
+                  <span>300 / 1k</span>
+                </div>
+              </div>
+
+              <!-- Measles Incidence -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-measles">Measles Incidence</label>
+                    <span class="field-hint">Reported measles cases per 1,000 population</span>
+                  </div>
+                  <span class="field-value-display" id="val-measles">17 cases</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-measles" min="0" max="25000" step="5" value="17" class="range-slider">
+                  <input type="number" id="num-measles" min="0" max="25000" step="1" value="17" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0 cases</span>
+                  <span>25,000+</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Tab 3: Immunization & Healthcare -->
+          <div class="tab-panel" id="panel-immunization">
+            <div class="form-grid">
+              
+              <!-- Polio Immunization -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-polio">Polio Immunization Rate (Pol3)</label>
+                    <span class="field-hint">% coverage among 1-year-olds</span>
+                  </div>
+                  <span class="field-value-display" id="val-polio">93.0%</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-polio" min="5" max="100" step="1" value="93" class="range-slider">
+                  <input type="number" id="num-polio" min="5" max="100" step="1" value="93" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>5% (Neglected)</span>
+                  <span>100% (Universal)</span>
+                </div>
+              </div>
+
+              <!-- Diphtheria Immunization -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-diphtheria">DTP3 Immunization Rate</label>
+                    <span class="field-hint">Diphtheria, Tetanus, Pertussis coverage (%)</span>
+                  </div>
+                  <span class="field-value-display" id="val-diphtheria">93.0%</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-diphtheria" min="5" max="100" step="1" value="93" class="range-slider">
+                  <input type="number" id="num-diphtheria" min="5" max="100" step="1" value="93" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>5%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+
+              <!-- Hepatitis B Immunization -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-hepatitis_b">Hepatitis B Coverage (HepB)</label>
+                    <span class="field-hint">Immunization coverage among 1-year-olds (%)</span>
+                  </div>
+                  <span class="field-value-display" id="val-hepatitis_b">92.0%</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-hepatitis_b" min="5" max="100" step="1" value="92" class="range-slider">
+                  <input type="number" id="num-hepatitis_b" min="5" max="100" step="1" value="92" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>5%</span>
+                  <span>100%</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Tab 4: Lifestyle & Nutrition -->
+          <div class="tab-panel" id="panel-lifestyle">
+            <div class="form-grid">
+              
+              <!-- BMI -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-bmi">Population Average BMI</label>
+                    <span class="field-hint">Average Body Mass Index (kg/m²)</span>
+                  </div>
+                  <span class="field-value-display" id="val-bmi">43.5</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-bmi" min="10" max="80" step="0.1" value="43.5" class="range-slider">
+                  <input type="number" id="num-bmi" min="10" max="80" step="0.1" value="43.5" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>10.0 (Underweight)</span>
+                  <span>80.0 (Severe Obese index)</span>
+                </div>
+              </div>
+
+              <!-- Alcohol -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-alcohol">Alcohol Consumption</label>
+                    <span class="field-hint">Per capita (age 15+) consumption in litres pure alcohol/yr</span>
+                  </div>
+                  <span class="field-value-display" id="val-alcohol">3.75 L</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-alcohol" min="0" max="18" step="0.05" value="3.75" class="range-slider">
+                  <input type="number" id="num-alcohol" min="0" max="18" step="0.05" value="3.75" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0.0 L (None)</span>
+                  <span>18.0 L (High)</span>
+                </div>
+              </div>
+
+              <!-- Thinness 1-19 years -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-thinness_1_19_years">Thinness (Ages 10-19)</label>
+                    <span class="field-hint">Prevalence of thinness among adolescents (%)</span>
+                  </div>
+                  <span class="field-value-display" id="val-thinness_1_19_years">3.3%</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-thinness_1_19_years" min="0.1" max="28" step="0.1" value="3.3" class="range-slider">
+                  <input type="number" id="num-thinness_1_19_years" min="0.1" max="28" step="0.1" value="3.3" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0.1%</span>
+                  <span>28.0%</span>
+                </div>
+              </div>
+
+              <!-- Thinness 5-9 years -->
+              <div class="input-card">
+                <div class="input-header">
+                  <div class="label-info">
+                    <label class="field-title" for="input-thinness_5_9_years">Thinness (Ages 5-9)</label>
+                    <span class="field-hint">Prevalence of thinness among children (%)</span>
+                  </div>
+                  <span class="field-value-display" id="val-thinness_5_9_years">3.3%</span>
+                </div>
+                <div class="slider-wrap">
+                  <input type="range" id="input-thinness_5_9_years" min="0.1" max="29" step="0.1" value="3.3" class="range-slider">
+                  <input type="number" id="num-thinness_5_9_years" min="0.1" max="29" step="0.1" value="3.3" class="num-box">
+                </div>
+                <div class="range-bounds">
+                  <span>0.1%</span>
+                  <span>29.0%</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Bottom Action Row -->
+          <div class="controls-action-bar">
+            <button id="btn-run-prediction" class="btn-primary">
+              <span class="btn-icon">⚡</span> Run Longevity Prediction
+            </button>
+            <span class="active-country-tag" id="active-country-tag">Using: Global Baseline Profile</span>
+          </div>
+
+        </div>
+
+        <!-- Prediction Result Output (Right Column) -->
+        <div class="output-container">
+          
+          <div class="result-card" id="result-card">
+            
+            <div class="result-header">
+              <span class="badge-live-eval">AI Prediction Engine</span>
+              <span class="model-tag" id="result-model-name">Random Forest</span>
+            </div>
+
+            <!-- Central Arc / Circular Longevity Gauge -->
+            <div class="gauge-wrapper">
+              <svg class="gauge-svg" viewBox="0 0 200 130">
+                <!-- Background Arc -->
+                <path class="gauge-bg" d="M 25 110 A 75 75 0 0 1 175 110" fill="none" stroke-width="14" stroke-linecap="round"/>
+                <!-- Value Arc -->
+                <path class="gauge-progress" id="gauge-progress" d="M 25 110 A 75 75 0 0 1 175 110" fill="none" stroke-width="14" stroke-linecap="round" stroke-dasharray="235.6" stroke-dashoffset="60"/>
+              </svg>
+              
+              <div class="gauge-center-content">
+                <span class="gauge-number" id="predicted-age-display">72.4</span>
+                <span class="gauge-units">Years of Age</span>
+              </div>
+            </div>
+
+            <!-- Longevity Tier & Delta Badges -->
+            <div class="result-badges">
+              <div class="tier-pill" id="result-tier-pill">
+                <span class="tier-dot"></span>
+                <span id="result-tier-name">High Longevity</span>
+              </div>
+              <div class="delta-pill" id="result-delta-pill">
+                <span id="result-delta-text">+3.2 yrs vs Global Avg</span>
+              </div>
+            </div>
+
+            <!-- Multi-Model Consensus Card -->
+            <div class="consensus-box">
+              <div class="consensus-title">Cross-Model Agreement</div>
+              <div class="consensus-grid">
+                <div class="consensus-item">
+                  <span class="c-label">Random Forest:</span>
+                  <span class="c-val" id="consensus-rf">72.4y</span>
+                </div>
+                <div class="consensus-item">
+                  <span class="c-label">Gradient Boost:</span>
+                  <span class="c-val" id="consensus-gbm">72.1y</span>
+                </div>
+                <div class="consensus-item">
+                  <span class="c-label">Ridge Linear:</span>
+                  <span class="c-val" id="consensus-ridge">71.8y</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Key Feature Drivers / Explainability -->
+            <div class="factors-section">
+              <div class="factors-heading">
+                <span>Key Positive Drivers</span>
+                <span class="factors-badge bg-emerald">Protective</span>
+              </div>
+              <div class="factors-list" id="positive-factors-list">
+                <div class="factor-chip positive">
+                  <span class="chip-icon">✔</span>
+                  <span class="chip-name">Low HIV/AIDS (0.1/1k)</span>
+                </div>
+                <div class="factor-chip positive">
+                  <span class="chip-icon">✔</span>
+                  <span class="chip-name">High HDI Score (0.75)</span>
+                </div>
+              </div>
+
+              <div class="factors-heading mt-3">
+                <span>Risk Factors / Life Shorteners</span>
+                <span class="factors-badge bg-rose">Vulnerability</span>
+              </div>
+              <div class="factors-list" id="negative-factors-list">
+                <div class="factor-chip negative">
+                  <span class="chip-icon">⚠</span>
+                  <span class="chip-name">Adult Mortality Rate (144/1k)</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actual WHO comparison if country selected -->
+            <div class="who-compare-box" id="who-compare-box" style="display: none;">
+              <div class="who-compare-inner">
+                <div class="who-icon">🏥</div>
+                <div class="who-text">
+                  <div class="who-title">Actual WHO Recorded Value:</div>
+                  <div class="who-value" id="actual-who-value">83.7 years</div>
+                  <div class="who-diff" id="actual-who-diff">Model error: 0.3 years (99.6% fit)</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- Longevity Drivers & Feature Importance Section -->
+    <section class="insights-section" id="feature-drivers-section">
+      <div class="section-header">
+        <span class="sub-pill">Machine Learning Interpretability</span>
+        <h3 class="section-title">What Drives Human Longevity Most?</h3>
+        <p class="section-desc">
+          Relative importance computed from 250 decision trees in our Random Forest model on 2,928 WHO records.
+        </p>
+      </div>
+
+      <div class="insights-grid">
+        <!-- Importance Chart Card -->
+        <div class="glass-card chart-card">
+          <div class="card-header">
+            <h4>Feature Importance Weights (%)</h4>
+            <span class="header-note">Gini Impurity Reduction</span>
+          </div>
+          <div class="importance-bars-container" id="importance-bars-container">
+            <!-- Dynamically populated via JS -->
+          </div>
+        </div>
+
+        <!-- Interpretive Explanations Card -->
+        <div class="glass-card notes-card">
+          <div class="card-header">
+            <h4>Epidemiological Takeaways</h4>
+            <span class="header-note">WHO Data Findings</span>
+          </div>
+          
+          <div class="takeaways-list">
+            <div class="takeaway-item">
+              <div class="takeaway-number">1</div>
+              <div class="takeaway-body">
+                <h5>HIV/AIDS Pediatric Mortality (~59.7% Influence)</h5>
+                <p>
+                  During 2000–2015, nations suffering untreated HIV epidemics experienced dramatic plunges in life expectancy down into the 40s and 50s. Antiretroviral therapy and prevention of mother-to-child transmission yield the highest marginal longevity dividend of any factor.
+                </p>
+              </div>
+            </div>
+
+            <div class="takeaway-item">
+              <div class="takeaway-number">2</div>
+              <div class="takeaway-body">
+                <h5>Income Composition & HDI (~17.1% Influence)</h5>
+                <p>
+                  Socioeconomic development, clean water, housing, and food security create the resilient base that protects populations from communicable diseases and premature death.
+                </p>
+              </div>
+            </div>
+
+            <div class="takeaway-item">
+              <div class="takeaway-number">3</div>
+              <div class="takeaway-body">
+                <h5>Adult Mortality Probability (~12.7% Influence)</h5>
+                <p>
+                  Premature mortality between ages 15 and 60 (driven by trauma, cardiovascular disease, and non-communicable illnesses) accounts for the primary divergence in lifespans between upper-middle and developed economies.
+                </p>
+              </div>
+            </div>
+
+            <div class="takeaway-item">
+              <div class="takeaway-number">4</div>
+              <div class="takeaway-body">
+                <h5>Schooling & Immunization Synergies</h5>
+                <p>
+                  Universal vaccination (Polio, Measles, DTP3) paired with maternal education above 12 years creates an exponential compounding effect on child survival rates.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Model Benchmarks Section -->
+    <section class="benchmarks-section" id="benchmarks-section">
+      <div class="section-header">
+        <span class="sub-pill">Model Validation & Evaluation</span>
+        <h3 class="section-title">Comparative Algorithm Benchmarks</h3>
+        <p class="section-desc">
+          Evaluated using 80/20 train-test split with 5-fold cross-validation on holdout data.
+        </p>
+      </div>
+
+      <div class="benchmarks-card glass-card">
+        <div class="table-responsive">
+          <table class="benchmark-table">
+            <thead>
+              <tr>
+                <th>Algorithm</th>
+                <th>Test R² Score</th>
+                <th>Mean Absolute Error (MAE)</th>
+                <th>Root Mean Squared Error (RMSE)</th>
+                <th>5-Fold Cross Validation R²</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="benchmark-table-body">
+              <tr>
+                <td>
+                  <div class="algo-col">
+                    <strong>🌲 Random Forest Regressor</strong>
+                    <span class="algo-sub">250 trees, max_depth=20</span>
+                  </div>
+                </td>
+                <td><span class="metric-highlight text-emerald">0.9664 (96.6%)</span></td>
+                <td>1.07 years</td>
+                <td>1.71 years</td>
+                <td>0.9570 ± 0.0039</td>
+                <td><span class="badge-champion">⭐ Primary Model</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="algo-col">
+                    <strong>⚡ Gradient Boosting Regressor</strong>
+                    <span class="algo-sub">200 trees, lr=0.08, depth=5</span>
+                  </div>
+                </td>
+                <td><span class="metric-highlight text-cyan">0.9641 (96.4%)</span></td>
+                <td>1.19 years</td>
+                <td>1.76 years</td>
+                <td>0.9579 ± 0.0036</td>
+                <td><span class="badge-active">Active Alternative</span></td>
+              </tr>
+              <tr>
+                <td>
+                  <div class="algo-col">
+                    <strong>📈 Ridge Linear Regression</strong>
+                    <span class="algo-sub">L2 regularized baseline (alpha=1.0)</span>
+                  </div>
+                </td>
+                <td><span class="metric-highlight text-muted">0.8195 (82.0%)</span></td>
+                <td>2.93 years</td>
+                <td>3.95 years</td>
+                <td>0.8143 ± 0.0135</td>
+                <td><span class="badge-baseline">Linear Baseline</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="methodology-note">
+          <strong>Imputation Strategy:</strong> Group-wise median imputation by nation followed by global median fallback. 
+          Target outliers were verified against WHO Global Observatory ground truths.
+        </div>
+      </div>
+    </section>
+
+    <!-- Dataset Explorer Section -->
+    <section class="explorer-section" id="explorer-section">
+      <div class="section-header">
+        <span class="sub-pill">WHO GHO Dataset (2000–2015)</span>
+        <h3 class="section-title">Interactive Dataset Explorer</h3>
+        <p class="section-desc">
+          Browse historical records across 193 countries. Click "Load into Predictor" on any record to inspect that nation's exact historical indicators!
+        </p>
+      </div>
+
+      <div class="explorer-card glass-card">
+        
+        <!-- Table Search and Filter Bar -->
+        <div class="explorer-toolbar">
+          <div class="search-input-wrap">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="dataset-search-input" placeholder="Search by country name (e.g. Germany, India, Brazil, Japan)..." class="search-field">
+          </div>
+          <div class="explorer-page-info">
+            <span id="page-count-text">Showing records 1 - 10 of 2,928</span>
+          </div>
+        </div>
+
+        <!-- Data Table -->
+        <div class="table-responsive">
+          <table class="data-table" id="dataset-table">
+            <thead>
+              <tr>
+                <th>Country</th>
+                <th>Year</th>
+                <th>Status</th>
+                <th>Life Expectancy</th>
+                <th>Adult Mort.</th>
+                <th>Infant Deaths</th>
+                <th>HIV/AIDS</th>
+                <th>BMI</th>
+                <th>Schooling</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="dataset-tbody">
+              <!-- Dynamically populated via JS -->
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination-bar">
+          <button id="btn-prev-page" class="btn-ghost" disabled>← Previous</button>
+          <div class="page-pills" id="page-pills"></div>
+          <button id="btn-next-page" class="btn-ghost">Next →</button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-brand">
+        <strong>VitaPulse AI</strong> • WHO Life Expectancy Machine Learning System
+      </div>
+      <div class="footer-source">
+        Dataset: <a href="https://www.kaggle.com/datasets/kumarajarshi/life-expectancy-who" target="_blank" rel="noopener">Kaggle (WHO Global Health Observatory)</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
